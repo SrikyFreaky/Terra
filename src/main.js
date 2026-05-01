@@ -346,6 +346,7 @@ function maybeCompleteLayer() {
   if (currentLayer >= 3) {
     gameWon = true;
     hud.updateBossWarning('All layers restored', 'success');
+    audio.playWin();
     completionScreen.show(elapsedSeconds, 'Ocean Restored');
     return;
   }
@@ -387,6 +388,7 @@ function advanceToNextLayerDev() {
   if (currentLayer >= 3) {
     gameWon = true;
     hud.updateBossWarning('Dev skip - completion reached', 'success');
+    audio.playWin();
     completionScreen.show(elapsedSeconds, 'Ocean Restored');
     return;
   }

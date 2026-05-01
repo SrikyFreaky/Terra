@@ -30,12 +30,19 @@ export class AudioManager {
   }
 
   #loadExternalMusic() {
-    this.ambientMusic = new Audio('/audio/dragon-studio-deep-sea-underwater-ambience-482888.mp3');
+    this.ambientMusic = new Audio('/Music/dragon-studio-deep-sea-underwater-ambience-482888.mp3');
     this.ambientMusic.loop = true;
-    this.ambientMusic.volume = 0.5;
+    this.ambientMusic.volume = 0.4;
 
-    this.gameOverMusic = new Audio('/audio/alphix-game-over-417465.mp3');
+    this.gameOverMusic = new Audio('/Music/alphix-game-over-417465.mp3');
     this.gameOverMusic.volume = 0.7;
+
+    this.winSound = new Audio('/Music/puyopuyomegafan1234-winner-game-sound-404167.mp3');
+    this.winSound.volume = 0.6;
+    
+    // Pre-load the fire sound to prevent lag
+    this.fireSound = new Audio('/Music/Laser-single-shot.mp3');
+    this.fireSound.volume = 0.35;
   }
 
   startAmbience() {
@@ -136,24 +143,28 @@ export class AudioManager {
 
   // ── Gameplay SFX ──────────────────────────────────────────────
   playFire() {
-    if (!this.isStarted) return;
-    // High-impact mechanical shot
-    const gun = new Audio('/audio/gun_fire.mp3');
-    gun.volume = 0.3;
-    gun.play().catch(() => {
-      // Fallback to procedural shot if file missing
+    if (!this.isStarted || !this.fireSound) return;
+    // Rapid fire: clone the node so multiple shots can overlap
+    const shot = this.fireSound.cloneNode();
+    shot.volume = this.fireSound.volume;
+    shot.play().catch(() => {
+      // Procedural fallback if needed
       const osc = this.ctx.createOscillator();
       const g = this.ctx.createGain();
       osc.type = 'square';
       osc.frequency.setValueAtTime(400, this.ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(40, this.ctx.currentTime + 0.1);
-      g.gain.setValueAtTime(0.15, this.ctx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
-      osc.connect(g);
-      g.connect(this.masterGain);
-      osc.start();
-      osc.stop(this.ctx.currentTime + 0.1);
+      g.gain.setValueAtTime(0.05, this.ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.1);
+      osc.connect(g); g.connect(this.masterGain);
+      osc.start(); osc.stop(this.ctx.currentTime + 0.1);
     });
+  }
+
+  playWin() {
+    if (!this.isStarted || !this.winSound) return;
+    this.stopAmbience();
+    this.winSound.play().catch(e => console.warn("Win sound blocked:", e));
   }
 
   playRestoration() {
