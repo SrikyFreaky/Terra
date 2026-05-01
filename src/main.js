@@ -34,6 +34,12 @@ import { EquipmentShop }           from './EquipmentShop.js';
 import { AudioManager }            from './AudioManager.js';
 import { spawnLayer1Artifacts, updateLayer1RestorationQueue } from './Layer1Artifacts.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { VibePortal } from './VibePortal.js';
+
+const urlParams = new URLSearchParams(window.location.search);
+const isFromPortal = urlParams.get('portal') === 'true';
+let exitPortal = null;
+let arrivalPortal = null;
 
 export const GlobalAssets = {
   player: null,
@@ -75,6 +81,11 @@ const checkLoadComplete = () => {
   if (loadedCount >= 5) {
     startBtn.textContent = 'ENGAGE SYSTEMS';
     startBtn.disabled = false;
+    
+    // Auto-start if coming from another game
+    if (isFromPortal && !gameStarted) {
+      setTimeout(() => startBtn.click(), 500);
+    }
   }
 };
 
@@ -101,6 +112,11 @@ startBtn.onclick = () => {
   audio.startAmbience();
   overlay.style.display = 'none';
   gameStarted = true;
+  
+  if (isFromPortal) {
+    arrivalPortal = new VibePortal(scene, false);
+    arrivalPortal.spawn(new THREE.Vector3(0, 0, 0));
+  }
 };
 
 const settingsBtn = document.getElementById('settings-btn');
@@ -420,6 +436,12 @@ function advanceToNextLayerDev() {
       environmentAssets.clear();
       environmentAssets.populateLayer(currentLayer, tileGrid.getBounds());
       
+      // Spawn Exit Portal in Layer 3
+      if (currentLayer === 3) {
+        exitPortal = new VibePortal(scene, true);
+        exitPortal.spawn(new THREE.Vector3(0, 0, 8)); // Visible from spawn
+      }
+      
       // 4. Update UI & Player
       hud.updatePurification(0);
       hud.updateLayerName(LAYERS[currentLayer].name);
@@ -624,6 +646,15 @@ function animate() {
     }
 
     player.update(dt, upgradeShop.speedMultiplier, mouseTargetPos, fxSystem);
+    
+    // Update Portals
+    if (arrivalPortal) arrivalPortal.update(elapsedSeconds || 0);
+    if (exitPortal) {
+      exitPortal.update(elapsedSeconds || 0);
+      if (currentLayer === 3 && exitPortal.checkCollision(player.mesh.position)) {
+        exitPortal.teleport();
+      }
+    }
     
     // Manual Fire (Spacebar or Mouse)
     if (player.keys.has(' ')) {
