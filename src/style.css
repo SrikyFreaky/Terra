@@ -1,0 +1,535 @@
+/* ── Terra The Deep — Full Theme ─────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg:      #060e14;
+  --teal:    #1e5a5a;
+  --teal-b:  #2a8a7a;
+  --teal-g:  #3abaaa;
+  --fog:     #060e14;
+  --hp-red:  #c44a4a;
+  --gold:    #b89a4a;
+  --txt-d:   #3a5a6a;
+  --txt-m:   #7a9aaa;
+  --txt-b:   #c0dae8;
+  --boss-g:  #cc6a4a;
+  --panel:   rgba(6, 14, 20, 0.90);
+  --border:  rgba(42, 138, 122, 0.18);
+  --accent:  #3abaaa;
+}
+
+* { box-sizing: border-box; }
+
+/* ── HUD panel ───────────────────────────────────────────────────── */
+.hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  padding: 14px 18px 16px;
+  color: var(--txt-b);
+  background: rgba(2, 12, 20, 0.95); /* Midnight Glass */
+  border: 1px solid rgba(58, 186, 170, 0.5);
+  border-top: none;
+  border-left: none;
+  border-radius: 0 0 10px 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  line-height: 1.7;
+  pointer-events: none;
+  user-select: none;
+  backdrop-filter: blur(10px);
+  min-width: 210px;
+  box-shadow: 0 0 20px rgba(42, 138, 122, 0.15);
+}
+
+.hud-stat {
+  transition: color 0.3s ease;
+}
+
+.ammo-low {
+  color: #ff4444 !important;
+  animation: ammo-pulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes ammo-pulse {
+  from { text-shadow: 0 0 2px rgba(255,0,0,0); }
+  to   { text-shadow: 0 0 8px rgba(255,0,0,0.8); }
+}
+
+.hud-layer {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--teal-g);
+  margin-bottom: 6px;
+  text-shadow: 0 0 10px rgba(58,186,170,.4);
+}
+
+.hud-label {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--txt-d);
+  margin-bottom: 3px;
+}
+
+.hud-bar-outer {
+  width: 100%;
+  height: 4px;
+  background: rgba(42,138,122,.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 7px;
+  box-shadow: 0 0 4px rgba(42,138,122,.1);
+}
+
+.hud-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--teal-g));
+  border-radius: 2px;
+  transition: width 0.4s;
+  box-shadow: 0 0 5px var(--teal-g);
+}
+
+.hud-stat {
+  color: var(--txt-m);
+  font-size: 11px;
+}
+
+.hud-inv {
+  color: var(--txt-d);
+  font-size: 10px;
+}
+
+.hud-section-title {
+  margin-top: 8px;
+  margin-bottom: 2px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--teal-g);
+  opacity: 0.65;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 30px 0;
+  width: 100%;
+  align-items: center;
+}
+
+.main-menu-btn {
+  background: rgba(58, 186, 170, 0.15);
+  border: 1px solid rgba(58, 186, 170, 0.4);
+  color: #3abaaa;
+  padding: 14px 40px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 260px;
+  backdrop-filter: blur(4px);
+  text-transform: uppercase;
+}
+
+.main-menu-btn:hover {
+  background: rgba(58, 186, 170, 0.3);
+  border-color: #3abaaa;
+  box-shadow: 0 0 20px rgba(58, 186, 170, 0.2);
+  transform: translateY(-2px);
+}
+
+.main-menu-btn.secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.main-menu-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.controls-hint {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: rgba(58, 186, 170, 0.5);
+  margin-top: 20px;
+  letter-spacing: 1px;
+}
+
+.main-menu-btn:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.hud-warning {
+  margin-top: 6px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: #c44a4a;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(196,74,74,.5);
+  animation: pulse-warn 1.4s ease-in-out infinite;
+}
+
+.hud-warning.success {
+  color: var(--teal-g);
+  text-shadow: 0 0 8px rgba(58,186,170,.5);
+  animation: none;
+}
+
+@keyframes pulse-warn {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* ── Key hints bar ───────────────────────────────────────────────── */
+.hud-hints {
+  position: fixed;
+  bottom: 18px;
+  left: 18px;
+  z-index: 10;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: #00ffcc;
+  background: rgba(2, 12, 20, 0.95);
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(58, 186, 170, 0.3);
+  line-height: 2;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+}
+
+.kh {
+  display: inline-block;
+  background: rgba(42,138,122,.07);
+  border: 1px solid rgba(42,138,122,.18);
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-size: 8px;
+  margin-right: 2px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ── Crafting Menu ───────────────────────────────────────────────── */
+.crafting-menu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 20;
+  width: min(400px, calc(100vw - 40px));
+  padding: 20px 24px;
+  color: var(--txt-b);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(14px);
+}
+
+.crafting-menu.hidden { display: none; }
+
+.crafting-menu h2 {
+  margin: 0 0 14px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--teal-g);
+}
+
+.recipe-button {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px 14px;
+  color: var(--txt-b);
+  text-align: left;
+  background: rgba(42,138,122,.06);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  transition: all 0.15s;
+}
+
+.recipe-button:hover {
+  border-color: rgba(42,186,170,.4);
+  background: rgba(42,138,122,.1);
+}
+
+.recipe-button.unavailable {
+  color: var(--txt-d);
+  background: rgba(42,138,122,.02);
+  cursor: default;
+}
+
+.recipe-button.selected {
+  border-color: var(--teal-g);
+  box-shadow: 0 0 0 1px rgba(58,186,170,.25);
+}
+
+.recipe-button strong,
+.recipe-button span,
+.recipe-button em {
+  display: block;
+}
+
+.recipe-button strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--teal-g);
+}
+
+.recipe-button span,
+.recipe-button em {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--txt-m);
+}
+
+/* ── Layer Transition ────────────────────────────────────────────── */
+.layer-transition {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 25;
+  width: min(440px, calc(100vw - 40px));
+  padding: 36px;
+  color: var(--txt-b);
+  text-align: center;
+  background: rgba(6,14,20,.96);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: 'Chakra Petch', sans-serif;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(18px);
+}
+
+.layer-transition.hidden { display: none; }
+
+/* ── Hurt Overlay ──────────────────────────────────────────────── */
+#hurt-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 99;
+  background: radial-gradient(circle, transparent 40%, rgba(255,0,0,0.4) 100%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.layer-transition h1 {
+  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(184,154,74,.4);
+}
+
+.layer-transition div {
+  font-size: 13px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--txt-m);
+  letter-spacing: 1px;
+}
+
+/* ── Completion Screen ───────────────────────────────────────────── */
+.completion-screen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 30;
+  width: min(460px, calc(100vw - 40px));
+  padding: 36px;
+  color: var(--txt-b);
+  text-align: center;
+  background: rgba(6,14,20,.96);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: 'Chakra Petch', sans-serif;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(18px);
+}
+
+.completion-screen.hidden { display: none; }
+
+.completion-screen h1 {
+  margin: 0 0 16px;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--teal-g);
+  text-shadow: 0 0 24px rgba(58,186,170,.5);
+}
+
+.completion-screen div {
+  margin-top: 8px;
+  font-size: 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--txt-m);
+}
+
+.completion-screen button {
+  margin-top: 24px;
+  padding: 13px 36px;
+  color: var(--teal-g);
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--teal-b);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+/* ── Audio Start Overlay ── */
+#audio-start {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #060e14; z-index: 1000; display: flex;
+  align-items: center; justify-content: center; text-align: center;
+  font-family: 'Chakra Petch', sans-serif;
+}
+#audio-start h1 { color: #3abaaa; letter-spacing: 5px; font-size: 40px; margin-bottom: 10px; }
+#audio-start p { color: #7a9aaa; font-family: 'IBM Plex Mono', monospace; margin-bottom: 30px; }
+#audio-start button {
+  background: transparent; border: 2px solid #3abaaa; color: #3abaaa;
+  padding: 15px 40px; cursor: pointer; font-weight: 700; letter-spacing: 2px;
+  transition: 0.3s;
+}
+#audio-start button:hover { background: rgba(58, 186, 170, 0.2); box-shadow: 0 0 20px rgba(58, 186, 170, 0.4); }
+
+/* ── Visor Scanlines ────────────────────────────────────────── */
+.scanlines {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 100;
+  pointer-events: none;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.08) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.02),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.02)
+  );
+  background-size: 100% 3px, 3px 100%;
+  opacity: 0.4;
+}
+
+/* ── Game Over Screen ────────────────────────────────────────── */
+.game-over-screen {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 5000;
+  display: flex;
+  align-items: center; justify-content: center;
+  background: rgba(10, 2, 2, 0.95);
+  backdrop-filter: blur(20px);
+  color: #fff;
+  font-family: 'Chakra Petch', sans-serif;
+  text-align: center;
+}
+
+.game-over-screen.hidden { display: none; }
+
+.game-over-screen h1 {
+  color: #ff4444;
+  font-size: 48px;
+  letter-spacing: 10px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 30px rgba(255, 68, 68, 0.6);
+}
+
+.game-over-screen p {
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+}
+
+.game-over-screen .stats {
+  margin-bottom: 40px;
+  font-size: 14px;
+  color: #ff4444;
+  opacity: 0.8;
+}
+
+.game-over-screen button {
+  background: transparent;
+  border: 2px solid #ff4444;
+  color: #ff4444;
+  padding: 15px 45px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.game-over-screen button:hover {
+  background: rgba(255, 68, 68, 0.2);
+  box-shadow: 0 0 30px rgba(255, 68, 68, 0.4);
+  transform: scale(1.05);
+}
+
+/* ── Jam Portal ─────────────────────────────────────────────── */
+.jam-portal-btn {
+  position: fixed;
+  top: 270px;
+  left: 18px;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  background: rgba(2, 12, 20, 0.9);
+  color: var(--teal-g);
+  border: 1px solid rgba(58, 186, 170, 0.5);
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(58, 186, 170, 0.3);
+  color: #3abaaa;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 4px;
+  backdrop-filter: blur(6px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.jam-portal-btn:hover {
+  background: rgba(58, 186, 170, 0.25);
+  border-color: #3abaaa;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(58, 186, 170, 0.2);
+  color: #fff;
+}
+
+.jam-portal-btn span {
+  display: inline-block;
+  margin-right: 2px;
+}
